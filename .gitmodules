@@ -1,0 +1,21 @@
+[submodule "client"]
+	path = client
+	url = https://github.com/beckn/biab-bap-client.git
+[submodule "protocol"]
+	path = protocol
+	url = https://github.com/beckn/biab-bap-protocol.git
+[submodule "storefront-ui"]
+	path = storefront-ui
+	url = https://github.com/beckn/biab-storefront-ui.git
+[submodule "protocol-dtos"]
+	path = protocol-dtos
+	url = https://github.com/beckn/beckn-protocol-dtos.git
+[submodule "aws-deployment-repos/mongodb"]
+	path = aws-deployment-repos/mongodb
+	url = https://github.com/beckn/biab-mongodb.git
+[submodule "aws-deployment-repos/infra"]
+	path = aws-deployment-repos/infra
+	url = https://github.com/beckn/biab-infra.git
+[submodule "aws-deployment-repos/api-gateway"]
+	path = aws-deployment-repos/api-gateway
+	url = https://github.com/beckn/biab-api-gateway.git
