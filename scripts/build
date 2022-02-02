@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# Ensure the submodules are up to date
+git submodule update
+
+# Make a `build/` folder
+rm -rf build && mkdir build && cd build
+
+# Copy the sources and the dockerfiles into the folder
+cp -r ../sources/ ./
+cp -r ../scripts/dockerfiles/* ./
+
+# Build each image in the following order:
+# 1. bap-base
+# 2. bap-protocol-helper
+# 3. bap-client
+# 4. bap-storefront
+docker build --tag ghcr.io/gamemaker1/bap-base --tag bap-base --file base.dockerfile .
+docker build --tag ghcr.io/gamemaker1/bap-protocol-helper --tag bap-protocol-helper --file protocol-helper.dockerfile .
+docker build --tag ghcr.io/gamemaker1/bap-client --tag bap-client --file client.dockerfile .
+docker build --tag ghcr.io/gamemaker1/bap-storefront --tag bap-storefront --file storefront.dockerfile .

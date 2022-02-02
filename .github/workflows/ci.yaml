@@ -1,0 +1,95 @@
+# .github/workflows/ci.yaml
+# This file defines the workflows to be run with GitHub Actions on every push.
+
+name: CI
+
+# Run the `Build` action on push to the `develop` branch, and the `Build` and
+# `Publish` actions on a tag push.
+on:
+  push:
+    branches:
+      - develop
+      - stable
+    tags:
+      - v*
+
+# The jobs to run.
+jobs:
+  # Build and test
+  build:
+    name: Build
+    # Run the job on a Linux machine.
+    runs-on: ubuntu-latest
+    steps:
+      # `git-clone` the repository on the branch that a push occurred on.
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      # Prepare for the build.
+      - name: Prepare for the build
+        run: |
+          rm -rf build && mkdir build && cd build
+          cp -r ../sources/ ./
+          cp -r ../scripts/dockerfiles/* ./
+      # Build and tag each image individually.
+      - name: Build `bap-base`
+        run: |
+          cd build
+          docker build --tag ghcr.io/gamemaker1/bap-base --tag bap-base --file base.dockerfile .
+      - name: Build `bap-client`
+        run: |
+          cd build
+          docker build --tag ghcr.io/gamemaker1/bap-client --tag bap-client --file client.dockerfile .
+      - name: Build `bap-protocol-helper`
+        run: |
+          cd build
+          docker build --tag ghcr.io/gamemaker1/bap-protocol-helper --tag bap-protocol-helper --file protocol-helper.dockerfile .
+      - name: Build `bap-storefront`
+        run: |
+          cd build
+          docker build --tag ghcr.io/gamemaker1/bap-storefront --tag bap-storefront --file storefront.dockerfile .
+  publish:
+    name: Publish
+    # Run the `Publish` action only if the developer has pushed a tag to GitHub
+    # and the `Build` job succeeds.
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    # Run the job on a Linux machine.
+    runs-on: ubuntu-latest
+    steps:
+      # `git-clone` the repository on the branch that a push occurred on (this should be the `stable` branch).
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      # Prepare for the build.
+      - name: Prepare for the build
+        run: |
+          rm -rf build && mkdir build && cd build
+          cp -r ../sources/ ./
+          cp -r ../scripts/dockerfiles/* ./
+      # Publish all the images to GHCR.
+      - name: Log in to GHCR
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      - name: Build and push `bap-base`
+        run: |
+          cd build/
+          docker build --tag ghcr.io/gamemaker1/bap-base --tag bap-base --file base.dockerfile .
+          docker push ghcr.io/gamemaker1/bap-base
+      - name: Build and push `bap-client`
+        run: |
+          cd build/
+          docker build --tag ghcr.io/gamemaker1/bap-client --tag bap-client --file client.dockerfile .
+          docker push ghcr.io/gamemaker1/bap-client
+      - name: Build and push `bap-protocol-helper`
+        run: |
+          cd build/
+          docker build --tag ghcr.io/gamemaker1/bap-protocol-helper --tag bap-protocol-helper --file protocol-helper.dockerfile .
+          docker push ghcr.io/gamemaker1/bap-protocol-helper
+      - name: Build and push `bap-storefront`
+        run: |
+          cd build/
+          docker build --tag ghcr.io/gamemaker1/bap-storefront --tag bap-storefront --file storefront.dockerfile .
+          docker push ghcr.io/gamemaker1/bap-storefront

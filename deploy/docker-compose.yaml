@@ -1,0 +1,63 @@
+# docker-compose.yaml
+# Builds and runs all three components of the BAP.
+
+version: '3'
+
+services:
+  # The Mongo database instance, required by the protocol helper.
+  database:
+    container_name: database
+    hostname: database
+    # Pull the image from the official repos.
+    image: mongo
+    # Expose it on localhost port 27017.
+    ports:
+      - 27017:27017
+    command: ['--bind_ip', '0.0.0.0']
+
+  # The Beckn protocol client.
+  client:
+    container_name: client
+    hostname: client
+    # Pull the image from GHCR.
+    image: ghcr.io/gamemaker1/bap-client
+    # Expose it on localhost port 9001.
+    ports:
+      - 9001:9001
+    # Provide configuration through environment variables
+    environment:
+      - DATABASE_URL=mongodb://database:27017/client
+    # The protocol helper requires mongo to be running
+    depends_on:
+      database:
+        condition: service_started
+
+  # The Beckn protocol helper.
+  protocol-helper:
+    container_name: protocol-helper
+    hostname: protocol-helper
+    # Pull the image from GHCR.
+    image: ghcr.io/gamemaker1/bap-protocol-helper
+    # Expose it on localhost port 9002.
+    ports:
+      - 9002:9002
+    # Provide configuration through environment variables
+    environment:
+      - DATABASE_URL=mongodb://database:27017/bap
+    # The protocol helper requires mongo to be running
+    depends_on:
+      database:
+        condition: service_started
+
+  # The storefront UI.
+  storefront:
+    container_name: storefront
+    hostname: storefront
+    # Pull the image from GHCR.
+    image: ghcr.io/gamemaker1/bap-storefront
+    # Expose it on localhost port 3000.
+    ports:
+      - 3000:3000
+    # Pass environment variables to it.
+    environment:
+      - MAPS_KEY=some-key

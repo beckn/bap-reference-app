@@ -1,0 +1,37 @@
+#!/bin/sh
+
+# Ensure the submodules are up to date.
+git submodule update
+
+# Ensure the version number is passed.
+if [[ -z "$1" ]]
+then
+	echo "ERR: Expected new semver version as first argument, e.g., './scripts/release v2.0.0'. (note the 'v' prefix)"
+	exit 1
+fi
+# Ensure we are on the stable branch.
+if ! [[ "$(git branch --show-current)" == "stable" ]]
+then
+	echo "ERR: Expected current branch to be 'stable'. Run 'git switch stable' to switch to the 'stable' branch."
+	exit 2
+fi
+# Ensure the working tree is clean
+if ! [[ -z "$(git status --porcelain)" ]]
+then
+	echo "ERR: Expected branch to be clean. Please stash your changes using 'git stash' before running this script."
+	exit 3
+fi
+
+# Bump the version
+new_version="$1"
+echo $new_version > ./version
+
+# Commit the change
+git add version
+git commit -S -m "chore(release): release $new_version"
+# Create a tag
+git tag "$new_version"
+
+# Push the commit and tag
+git push -u origin stable
+git push -u origin "$new_version"
