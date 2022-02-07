@@ -72,7 +72,10 @@ If you are facing any problems or have any questions, please don't hesitate to
 ### Using the Individual Components
 
 Each component is packaged into its own image, so you can use it in your own
-project too.
+project too. The dockerfiles used to build each image can be found
+[here](/scripts/dockerfiles).
+
+#### Beckn Protocol Client
 
 The [`client` component](/readme.md#beckn-protocol-client) image can be found at
 `ghcr.io/gamemaker1/bap-client`. To use it, simply `pull` it using `docker`:
@@ -87,6 +90,8 @@ database running on port 27017:
 ```
 > docker run -p 9001:9001 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/gamemaker1/bap-client
 ```
+
+#### Protocol Helper
 
 The [`protocol-helper` component](/readme.md#protocol-helper) image can be found
 at `ghcr.io/gamemaker1/bap-protocol-helper`. To use it, simply `pull` it using
@@ -103,6 +108,8 @@ database running on port 27017:
 > docker run -p 9002:9002 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/gamemaker1/bap-protocol-helper
 ```
 
+#### Protocol DTOs
+
 The `bap-client` and `bap-protocol-helper` images are built based off the
 [`bap-base`](/readme.md#protocol-dtos) image, which can be `pull`ed using
 `docker`:
@@ -110,6 +117,8 @@ The `bap-client` and `bap-protocol-helper` images are built based off the
 ```
 > docker pull ghcr.io/gamemaker1/bap-base
 ```
+
+#### UI Layer
 
 The [`storefront-ui`](/readme.md#ui-layer) component itself is also packaged as
 a docker image:

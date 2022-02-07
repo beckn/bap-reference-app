@@ -42,8 +42,8 @@ written in [`kotlin`](https://kotlinlang.org/).
 
 All four building blocks are designed such that they can be used individually or
 together. Each building block has a docker file that builds the component as a
-docker image. View the
-[docker deployment guide](docs/guides/deployment/docker.md) for more details.
+docker image. View the [docker usage guide](docs/guides/usage/docker.md) for
+more details.
 
 ## Issues/Contributing
 
