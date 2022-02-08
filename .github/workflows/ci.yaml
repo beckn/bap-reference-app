@@ -3,15 +3,9 @@
 
 name: CI
 
-# Run the `Build` action on push to the `develop` branch, and the `Build` and
+# Run the `Build` action on push to the any branch, and the `Build` and
 # `Publish` actions on a tag push.
-on:
-  push:
-    branches:
-      - develop
-      - stable
-    tags:
-      - v*
+on: [push, pull_request]
 
 # The jobs to run.
 jobs:
