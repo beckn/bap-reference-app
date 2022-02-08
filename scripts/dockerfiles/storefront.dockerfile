@@ -35,7 +35,7 @@ COPY --from=build /app/nginx.conf.j2 /etc/nginx/nginx.conf
 # Set the application entrypoint
 WORKDIR /usr/share/nginx/html
 RUN chmod +x ./storefront.entrypoint
-CMD ["bash", "./storefront.entrypoint"]
+CMD ["sh", "./storefront.entrypoint"]
 
 # Export port 8080, which 
 EXPOSE 8080
