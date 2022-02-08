@@ -1,12 +1,12 @@
 [submodule "sources/client"]
 	path = sources/client
-	url = git@github.com:gamemaker1/biab-bap-client.git
+	url = git@github.com:beckn/biab-bap-client.git
 [submodule "sources/protocol-helper"]
 	path = sources/protocol-helper
-	url = git@github.com:gamemaker1/biab-bap-protocol.git
+	url = git@github.com:beckn/biab-bap-protocol.git
 [submodule "sources/protocol-dtos"]
 	path = sources/protocol-dtos
-	url = git@github.com:gamemaker1/beckn-protocol-dtos.git
+	url = git@github.com:beckn/beckn-protocol-dtos.git
 [submodule "sources/storefront"]
 	path = sources/storefront
-	url = git@github.com:gamemaker1/biab-storefront-ui.git
+	url = git@github.com:beckn/biab-storefront-ui.git

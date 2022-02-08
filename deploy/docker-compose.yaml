@@ -20,7 +20,7 @@ services:
     container_name: client
     hostname: client
     # Pull the image from GHCR.
-    image: ghcr.io/gamemaker1/bap-client
+    image: ghcr.io/beckn/bap-client
     # Expose it on localhost port 9001.
     ports:
       - 9001:9001
@@ -37,7 +37,7 @@ services:
     container_name: protocol-helper
     hostname: protocol-helper
     # Pull the image from GHCR.
-    image: ghcr.io/gamemaker1/bap-protocol-helper
+    image: ghcr.io/beckn/bap-protocol-helper
     # Expose it on localhost port 9002.
     ports:
       - 9002:9002
@@ -54,7 +54,7 @@ services:
     container_name: storefront
     hostname: storefront
     # Pull the image from GHCR.
-    image: ghcr.io/gamemaker1/bap-storefront
+    image: ghcr.io/beckn/bap-storefront
     # Expose it on localhost port 3000.
     ports:
       - 3000:3000

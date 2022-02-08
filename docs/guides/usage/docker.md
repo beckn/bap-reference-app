@@ -67,7 +67,7 @@ process has finished, browse to [`http://localhost:3000`](http://localhost:3000)
 and start using the storefront application!
 
 If you are facing any problems or have any questions, please don't hesitate to
-[start a discussion on GitHub](https://github.com/gamemaker1/bap-reference-app/discussions/new).
+[start a discussion on GitHub](https://github.com/beckn/bap-reference-app/discussions/new).
 
 ### Using the Individual Components
 
@@ -78,34 +78,34 @@ project too. The dockerfiles used to build each image can be found
 #### Beckn Protocol Client
 
 The [`client` component](/readme.md#beckn-protocol-client) image can be found at
-`ghcr.io/gamemaker1/bap-client`. To use it, simply `pull` it using `docker`:
+`ghcr.io/beckn/bap-client`. To use it, simply `pull` it using `docker`:
 
 ```
-> docker pull ghcr.io/gamemaker1/bap-client
+> docker pull ghcr.io/beckn/bap-client
 ```
 
 To run the Beckn protocol client on port 9001, and tell it to use the Mongo
 database running on port 27017:
 
 ```
-> docker run -p 9001:9001 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/gamemaker1/bap-client
+> docker run -p 9001:9001 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/beckn/bap-client
 ```
 
 #### Protocol Helper
 
 The [`protocol-helper` component](/readme.md#protocol-helper) image can be found
-at `ghcr.io/gamemaker1/bap-protocol-helper`. To use it, simply `pull` it using
+at `ghcr.io/beckn/bap-protocol-helper`. To use it, simply `pull` it using
 `docker`:
 
 ```
-> docker pull ghcr.io/gamemaker1/bap-protocol-helper
+> docker pull ghcr.io/beckn/bap-protocol-helper
 ```
 
 To run the Beckn protocol helper on port 9002, and tell it to use the Mongo
 database running on port 27017:
 
 ```
-> docker run -p 9002:9002 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/gamemaker1/bap-protocol-helper
+> docker run -p 9002:9002 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/beckn/bap-protocol-helper
 ```
 
 #### Protocol DTOs
@@ -115,7 +115,7 @@ The `bap-client` and `bap-protocol-helper` images are built based off the
 `docker`:
 
 ```
-> docker pull ghcr.io/gamemaker1/bap-base
+> docker pull ghcr.io/beckn/bap-base
 ```
 
 #### UI Layer
@@ -124,14 +124,14 @@ The [`storefront-ui`](/readme.md#ui-layer) component itself is also packaged as
 a docker image:
 
 ```
-docker pull ghcr.io/gamemaker1/bap-storefront
+docker pull ghcr.io/beckn/bap-storefront
 ```
 
 To run the storefront UI on port 3000:
 
 ```
-> docker run -p 3000:3000 ghcr.io/gamemaker1/bap-storefront
+> docker run -p 3000:3000 ghcr.io/beckn/bap-storefront
 ```
 
 If you are facing any problems or have any questions, please don't hesitate to
-[start a discussion on GitHub](https://github.com/gamemaker1/bap-reference-app/discussions/new).
+[start a discussion on GitHub](https://github.com/beckn/bap-reference-app/discussions/new).

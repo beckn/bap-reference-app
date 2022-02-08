@@ -15,7 +15,7 @@ cp -r ../scripts/dockerfiles/* ./
 # 2. bap-protocol-helper
 # 3. bap-client
 # 4. bap-storefront
-docker build --tag ghcr.io/gamemaker1/bap-base --tag bap-base --file base.dockerfile .
-docker build --tag ghcr.io/gamemaker1/bap-protocol-helper --tag bap-protocol-helper --file protocol-helper.dockerfile .
-docker build --tag ghcr.io/gamemaker1/bap-client --tag bap-client --file client.dockerfile .
-docker build --tag ghcr.io/gamemaker1/bap-storefront --tag bap-storefront --file storefront.dockerfile .
+docker build --tag ghcr.io/beckn/bap-base --tag bap-base --file base.dockerfile .
+docker build --tag ghcr.io/beckn/bap-protocol-helper --tag bap-protocol-helper --file protocol-helper.dockerfile .
+docker build --tag ghcr.io/beckn/bap-client --tag bap-client --file client.dockerfile .
+docker build --tag ghcr.io/beckn/bap-storefront --tag bap-storefront --file storefront.dockerfile .
