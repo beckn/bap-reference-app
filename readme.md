@@ -8,7 +8,11 @@ Beckn Application (BAP) or any of its building blocks individually.
 This BAP comprises of four building blocks: the UI layer, the Beckn protocol
 client, the Beckn protocol helper and the protocol DTOs.
 
+<div align="center">
+
 ![Technical Architecture Diagram](docs/assets/technical-architecture.png)
+
+</div>
 
 ### UI Layer
 
