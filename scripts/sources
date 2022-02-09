@@ -51,7 +51,7 @@ echo -e "${color_dimmed}"
 
 git submodule foreach 'git checkout --quiet main && git pull --quiet origin main'
 git add sources/
-git commit --quiet --gpg-sign --message "chore(sources): update all submodules"
+git commit --quiet --message "chore(sources): update all submodules"
 
 echo -e "${color_normal}"
 print_success "Successfully updated submodules"

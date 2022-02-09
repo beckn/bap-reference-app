@@ -63,7 +63,7 @@ print_success "Bumped version to ${color_yellow}${new_version}${color_normal}"
 
 # Commit the change
 git add ./version
-git commit --quiet --gpg-sign --message "chore(release): ${new_version}"
+git commit --quiet --message "chore(release): ${new_version}"
 # Create a tag
 git tag "${new_version}"
 
