@@ -3,7 +3,7 @@
 
 # -- Build stage --
 
-FROM node:14.18.1-alpine as build
+FROM node:14.19.0-alpine as build
 
 # Install necessary packages
 RUN apk update
@@ -24,7 +24,7 @@ FROM nginx:1.19.7-alpine
 
 # Install necessary packages
 RUN apk update && apk upgrade
-RUN apk add --no-cache nodejs=14.18.1-r0 npm=14.18.1-r0
+RUN apk add --no-cache nodejs=14.19.0-r0 npm=14.19.0-r0
 RUN npm install -g yarn
 
 # Copy over the built application to the `/usr/share/nginx/html` directory, so
