@@ -44,35 +44,14 @@ then
 	exit 1
 fi
 
-# -- Bump and Push --
+# -- Update --
 
-# Bump the version
-existing_version="$(cat ./version)"
-
-print_info "Currently on version ${color_yellow}${existing_version}${color_normal}, bumping"
-
-# The version is the Beckn Protocol version and build number, separated by a
-# dash. Split everything after the dash, and bump it by one.
-build_number="$(( ${existing_version#*-} + 1 ))"
-protocol_version="${existing_version%%-*}"
-new_version="${protocol_version}-${build_number}"
-# Save the new version
-echo "$new_version" > ./version
-
-print_success "Bumped version to ${color_yellow}${new_version}${color_normal}"
-
-# Commit the change
-git add ./version
-git commit --quiet --gpg-sign --message "chore(release): ${new_version}"
-# Create a tag
-git tag "${new_version}"
-
-print_success "Tagged new version as ${color_yellow}${new_version} ($(git rev-parse --short HEAD))${color_normal}"
+print_info "Updating submodules"
 echo -e "${color_dimmed}"
 
-# Push the commit and tag
-git push --quiet
-git push --quiet --set-upstream origin "${new_version}"
+git submodule foreach 'git checkout --quiet main && git pull --quiet origin main'
+git add sources/
+git commit --quiet --gpg-sign --message "chore(sources): update all submodules"
 
 echo -e "${color_normal}"
-print_success "Successfully released ${new_version}"
+print_success "Successfully updated submodules"
