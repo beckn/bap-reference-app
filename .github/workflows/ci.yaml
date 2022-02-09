@@ -5,7 +5,16 @@ name: CI
 
 # Run the `Build` action on push to the any branch, and the `Build` and
 # `Publish` actions on a tag push.
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  # Also run it when the `Release/Create` workflow has been completed. This
+  # hack is needed because tag pushes from a GitHub workflow do not trigger
+  # other GitHub workflows - https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
+  workflow_run:
+    workflows: ['Release']
+    types:
+      - completed
 
 # The jobs to run.
 jobs:
@@ -36,8 +45,11 @@ jobs:
   publish:
     name: Publish
     # Run the `Publish` action only if the developer has pushed a tag to GitHub
-    # and the `Build` job succeeds.
-    if: startsWith(github.ref, 'refs/tags/v')
+    # and the `Build` job succeeds OR if the previous workflow (`Release/Create`)
+    # succeeds.
+    if:
+      startsWith(github.ref, 'refs/tags/v') ||
+      github.event.workflow_run.conclusion == 'success'
     needs: build
     # Run the job on a Linux machine.
     runs-on: ubuntu-latest

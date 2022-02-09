@@ -22,14 +22,11 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      # Configure the user performing the release action.
-      - name: Configure credentials
+      # Set the committer to the GitHub actions user.
+      - name: Configure actions user
         run: |
-          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
           git config user.name github-actions[bot]
           git config user.email github-actions[bot]@users.noreply.github.com
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # Update the submodules
       - name: Update all sources
         run: ./scripts/sources
