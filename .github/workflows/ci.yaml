@@ -20,29 +20,19 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      # Prepare for the build.
-      - name: Prepare for the build
-        run: |
-          rm -rf build && mkdir build && cd build
-          cp -r ../sources/ ./
-          cp -r ../scripts/dockerfiles/* ./
       # Build and tag each image individually.
       - name: Build `bap-base`
         run: |
-          cd build
-          docker build --tag ghcr.io/beckn/bap-base --tag bap-base --file base.dockerfile .
+          ./scripts/build bap-base
       - name: Build `bap-client`
         run: |
-          cd build
-          docker build --tag ghcr.io/beckn/bap-client --tag bap-client --file client.dockerfile .
+          ./scripts/build bap-client
       - name: Build `bap-protocol-helper`
         run: |
-          cd build
-          docker build --tag ghcr.io/beckn/bap-protocol-helper --tag bap-protocol-helper --file protocol-helper.dockerfile .
+          ./scripts/build bap-protocol-helper
       - name: Build `bap-storefront`
         run: |
-          cd build
-          docker build --tag ghcr.io/beckn/bap-storefront --tag bap-storefront --file storefront.dockerfile .
+          ./scripts/build bap-storefront
   publish:
     name: Publish
     # Run the `Publish` action only if the developer has pushed a tag to GitHub
@@ -57,33 +47,24 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-      # Prepare for the build.
-      - name: Prepare for the build
-        run: |
-          rm -rf build && mkdir build && cd build
-          cp -r ../sources/ ./
-          cp -r ../scripts/dockerfiles/* ./
-      # Publish all the images to GHCR.
+      # Log in to the GitHub Container Registry
       - name: Log in to GHCR
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      # Build and push each of the images
       - name: Build and push `bap-base`
         run: |
-          cd build/
-          docker build --tag ghcr.io/beckn/bap-base:latest --tag "ghcr.io/beckn/bap-base:$(cat version)" --tag bap-base --file base.dockerfile .
+          ./scripts/build bap-base
           docker push ghcr.io/beckn/bap-base
       - name: Build and push `bap-client`
         run: |
-          cd build/
-          docker build --tag ghcr.io/beckn/bap-client:latest --tag "ghcr.io/beckn/bap-client:$(cat version)" --tag bap-client --file client.dockerfile .
+          ./scripts/build bap-client
           docker push ghcr.io/beckn/bap-client
       - name: Build and push `bap-protocol-helper`
         run: |
-          cd build/
-          docker build --tag ghcr.io/beckn/bap-protocol-helper:latest --tag "ghcr.io/beckn/bap-protocol-helper:$(cat version)" --tag bap-protocol-helper --file protocol-helper.dockerfile .
+          ./scripts/build bap-protocol-helper
           docker push ghcr.io/beckn/bap-protocol-helper
       - name: Build and push `bap-storefront`
         run: |
-          cd build/
-          docker build --tag ghcr.io/beckn/bap-storefront:latest --tag "ghcr.io/beckn/bap-storefront:$(cat version)" --tag bap-storefront --file storefront.dockerfile .
+          ./scripts/build bap-storefront
           docker push ghcr.io/beckn/bap-storefront

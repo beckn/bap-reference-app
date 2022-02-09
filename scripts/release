@@ -1,7 +1,41 @@
 #!/bin/bash
 
-# Ensure the submodules are up to date.
-git submodule update
+# -- Setup --
+
+# Fail if any command fails
+set -euo pipefail
+
+# Print a blank line before starting, to look cool :P
+echo
+# Also print one before we exit
+trap echo EXIT
+
+# -- Input and Output --
+
+# Define colors so we can print colorful text
+color_red="\033[0;31m"
+color_green="\033[0;32m"
+color_yellow="\033[0;33m"
+color_cyan="\033[0;36m"
+color_dimmed="\033[1;30m"
+color_normal="\033[0m"
+
+# Define output helper functions
+# Print functions with different colors
+function print_success {
+	echo -e "${color_green} ~ | $1 ${color_normal}"
+}
+function print_warning {
+	echo -e "${color_yellow} ! | $1 ${color_normal}"
+}
+function print_error {
+	echo -e "${color_red} E | $1 ${color_normal}"
+}
+function print_info {
+	echo -e "${color_cyan} i | $1 ${color_normal}"
+}
+
+# -- Validation --
 
 # Ensure the working tree is clean
 if ! [[ -z "$(git status --porcelain)" ]]
@@ -10,20 +44,35 @@ then
 	exit 1
 fi
 
-# Bump the version
-existing_version=$(cat ./version)
-build_number=$(( ${existing_version#*-} + 1 ))
-protocol_version=${existing_version%%-*}
+# -- Bump and Push --
 
-new_version="$protocol_version-$build_number"
-echo $new_version > ./version
+# Bump the version
+existing_version="$(cat ./version)"
+
+print_info "Currently on version ${color_yellow}${existing_version}${color_normal}, bumping"
+
+# The version is the Beckn Protocol version and build number, separated by a
+# dash. Split everything after the dash, and bump it by one.
+build_number="$(( ${existing_version#*-} + 1 ))"
+protocol_version="${existing_version%%-*}"
+new_version="${protocol_version}-${build_number}"
+# Save the new version
+echo "$new_version" > ./version
+
+print_success "Bumped version to ${color_yellow}${new_version}${color_normal}"
 
 # Commit the change
-git add version
-git commit -S -m "chore(release): release $new_version"
+git add ./version
+git commit --quiet --gpg-sign --message "chore(release): ${new_version}"
 # Create a tag
-git tag "$new_version"
+git tag "${new_version}"
+
+print_success "Tagged new version as ${color_yellow}${new_version} ($(git rev-parse --short HEAD))${color_normal}"
+echo -e "${color_dimmed}"
 
 # Push the commit and tag
-git push
-git push -u origin "$new_version"
+git push --quiet
+git push --quiet --set-upstream origin "${new_version}"
+
+echo -e "${color_normal}"
+print_success "Successfully released ${new_version}"
