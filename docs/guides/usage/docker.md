@@ -1,4 +1,4 @@
-# Docker Deployment Guide
+# Docker Usage Guide
 
 This guide walks you through running the Beckn in a Box application using
 `docker` and `docker-compose`.
@@ -48,8 +48,6 @@ Docker Compose version 2.2.3
 
 ## Running the application
 
-### BAP Storefront UI
-
 You can run the BAP Storefront UI application via the docker compose file given
 in the `deploy/` folder -
 [`deploy/docker-compose.yaml`](/deploy/docker-compose.yaml). Simply download the
@@ -69,43 +67,49 @@ and start using the storefront application!
 If you are facing any problems or have any questions, please don't hesitate to
 [start a discussion on GitHub](https://github.com/beckn/bap-reference-app/discussions/new).
 
-### Using the Individual Components
+## Using the Individual Components
 
 Each component is packaged into its own image, so you can use it in your own
 project too. The dockerfiles used to build each image can be found
 [here](/scripts/dockerfiles).
 
+Each image has a `latest` tag (`ghcr.io/beckn/<image>:latest`), which is the
+latest version of the component. You can also access a specific version using
+the version number as the tag (`ghcr.io/beckn/<image>:<version>`). The version
+number is composed of the Beckn Protocol version the component implements,
+followed by a dash and the build number, e.g., `v0.9.3-1`.
+
 #### Beckn Protocol Client
 
 The [`client` component](/readme.md#beckn-protocol-client) image can be found at
-`ghcr.io/beckn/bap-client`. To use it, simply `pull` it using `docker`:
+`ghcr.io/beckn/bap-client:latest`. To use it, simply `pull` it using `docker`:
 
 ```
-> docker pull ghcr.io/beckn/bap-client
+> docker pull ghcr.io/beckn/bap-client:latest
 ```
 
 To run the Beckn protocol client on port 9001, and tell it to use the Mongo
 database running on port 27017:
 
 ```
-> docker run -p 9001:9001 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/beckn/bap-client
+> docker run -p 9001:9001 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/beckn/bap-client:latest
 ```
 
 #### Protocol Helper
 
 The [`protocol-helper` component](/readme.md#protocol-helper) image can be found
-at `ghcr.io/beckn/bap-protocol-helper`. To use it, simply `pull` it using
+at `ghcr.io/beckn/bap-protocol-helper:latest`. To use it, simply `pull` it using
 `docker`:
 
 ```
-> docker pull ghcr.io/beckn/bap-protocol-helper
+> docker pull ghcr.io/beckn/bap-protocol-helper:latest
 ```
 
 To run the Beckn protocol helper on port 9002, and tell it to use the Mongo
 database running on port 27017:
 
 ```
-> docker run -p 9002:9002 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/beckn/bap-protocol-helper
+> docker run -p 9002:9002 --env DATABASE_URL=mongodb://localhost:27017 ghcr.io/beckn/bap-protocol-helper:latest
 ```
 
 #### Protocol DTOs
@@ -115,7 +119,7 @@ The `bap-client` and `bap-protocol-helper` images are built based off the
 `docker`:
 
 ```
-> docker pull ghcr.io/beckn/bap-base
+> docker pull ghcr.io/beckn/bap-base:latest
 ```
 
 #### UI Layer
@@ -124,13 +128,13 @@ The [`storefront-ui`](/readme.md#ui-layer) component itself is also packaged as
 a docker image:
 
 ```
-docker pull ghcr.io/beckn/bap-storefront
+docker pull ghcr.io/beckn/bap-storefront:latest
 ```
 
 To run the storefront UI on port 3000:
 
 ```
-> docker run -p 3000:3000 ghcr.io/beckn/bap-storefront
+> docker run -p 3000:3000 ghcr.io/beckn/bap-storefront:latest
 ```
 
 If you are facing any problems or have any questions, please don't hesitate to
