@@ -1,0 +1,82 @@
+# .github/workflows/ci.yaml
+# This file defines the workflows to be run with GitHub Actions on every push.
+
+name: CI
+
+# Run the `Build` action on push to the any branch, and the `Build` and
+# `Publish` actions on a tag push.
+on:
+  push:
+  pull_request:
+  # Also run it when the `Release/Create` workflow has been completed. This
+  # hack is needed because tag pushes from a GitHub workflow do not trigger
+  # other GitHub workflows - https://docs.github.com/en/actions/using-workflows/triggering-a-workflow#triggering-a-workflow-from-a-workflow
+  workflow_run:
+    workflows: ['Release']
+    types:
+      - completed
+
+# The jobs to run.
+jobs:
+  # Build and test
+  build:
+    name: Build
+    # Run the job on a Linux machine.
+    runs-on: ubuntu-latest
+    steps:
+      # `git-clone` the repository on the branch that a push occurred on.
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      # Build and tag each image individually.
+      - name: Build `bap-base`
+        run: |
+          ./scripts/build bap-base
+      - name: Build `bap-client`
+        run: |
+          ./scripts/build bap-client
+      - name: Build `bap-protocol-helper`
+        run: |
+          ./scripts/build bap-protocol-helper
+      - name: Build `bap-storefront`
+        run: |
+          ./scripts/build bap-storefront
+  publish:
+    name: Publish
+    # Run the `Publish` action only if the developer has pushed a tag to GitHub
+    # and the `Build` job succeeds OR if the previous workflow (`Release/Create`)
+    # succeeds.
+    if:
+      startsWith(github.ref, 'refs/tags/v') ||
+      github.event.workflow_run.conclusion == 'success'
+    needs: build
+    # Run the job on a Linux machine.
+    runs-on: ubuntu-latest
+    steps:
+      # `git-clone` the repository on the branch that a push occurred on (this should be the `stable` branch).
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      # Log in to the GitHub Container Registry
+      - name: Log in to GHCR
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+      # Build and push each of the images
+      - name: Build and push `bap-base`
+        run: |
+          ./scripts/build bap-base
+          docker push ghcr.io/beckn/bap-base
+      - name: Build and push `bap-client`
+        run: |
+          ./scripts/build bap-client
+          docker push ghcr.io/beckn/bap-client
+      - name: Build and push `bap-protocol-helper`
+        run: |
+          ./scripts/build bap-protocol-helper
+          docker push ghcr.io/beckn/bap-protocol-helper
+      - name: Build and push `bap-storefront`
+        run: |
+          ./scripts/build bap-storefront
+          docker push ghcr.io/beckn/bap-storefront

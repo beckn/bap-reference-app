@@ -1,0 +1,35 @@
+# .github/workflows/release.yaml
+# This file defines the workflows to release a new version of the BAP.
+
+name: Release
+
+# Run the actions when manually triggered or at 17:42 on every Tuesday.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 42 17 * * 2
+
+# The jobs to run.
+jobs:
+  # A workflow to create a release.
+  create-release:
+    name: Create
+    # Run the job on a Linux machine.
+    runs-on: ubuntu-latest
+    steps:
+      # `git-clone` the repository on the default branch.
+      - name: Checkout the repository
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      # Set the committer to the GitHub actions user.
+      - name: Configure actions user
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+      # Update the submodules
+      - name: Update all sources
+        run: ./scripts/sources
+      # Run the release script.
+      - name: Create a new release
+        run: ./scripts/release

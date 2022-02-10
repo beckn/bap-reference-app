@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# -- Setup --
+
+# Fail if any command fails
+set -euo pipefail
+
+# Print a blank line before starting, to look cool :P
+echo
+# Also print one before we exit
+trap echo EXIT
+
+# -- Input and Output --
+
+# Define colors so we can print colorful text
+color_red="\033[0;31m"
+color_green="\033[0;32m"
+color_yellow="\033[0;33m"
+color_cyan="\033[0;36m"
+color_dimmed="\033[1;30m"
+color_normal="\033[0m"
+
+# Define output helper functions
+# Print functions with different colors
+function print_success {
+	echo -e "${color_green} ~ | $1 ${color_normal}"
+}
+function print_warning {
+	echo -e "${color_yellow} ! | $1 ${color_normal}"
+}
+function print_error {
+	echo -e "${color_red} E | $1 ${color_normal}"
+}
+function print_info {
+	echo -e "${color_cyan} i | $1 ${color_normal}"
+}
+
+# -- Validation --
+
+# Ensure the working tree is clean
+if ! [[ -z "$(git status --porcelain)" ]]
+then
+	print_error "Expected branch to be clean. Please stash your changes using 'git stash' before running this script."
+	exit 1
+fi
+
+# -- Update --
+
+print_info "Updating submodules"
+echo -e "${color_dimmed}"
+
+git submodule foreach 'git checkout --quiet main && git pull --quiet origin main'
+git add sources/
+git commit --quiet --message "chore(sources): update all submodules"
+
+echo -e "${color_normal}"
+print_success "Successfully updated submodules"
