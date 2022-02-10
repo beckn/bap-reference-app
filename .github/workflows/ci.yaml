@@ -67,16 +67,16 @@ jobs:
       - name: Build and push `bap-base`
         run: |
           ./scripts/build bap-base
-          docker push ghcr.io/beckn/bap-base
+          docker push --all-tags ghcr.io/beckn/bap-base
       - name: Build and push `bap-client`
         run: |
           ./scripts/build bap-client
-          docker push ghcr.io/beckn/bap-client
+          docker push --all-tags ghcr.io/beckn/bap-client
       - name: Build and push `bap-protocol-helper`
         run: |
           ./scripts/build bap-protocol-helper
-          docker push ghcr.io/beckn/bap-protocol-helper
+          docker push --all-tags ghcr.io/beckn/bap-protocol-helper
       - name: Build and push `bap-storefront`
         run: |
           ./scripts/build bap-storefront
-          docker push ghcr.io/beckn/bap-storefront
+          docker push --all-tags ghcr.io/beckn/bap-storefront
