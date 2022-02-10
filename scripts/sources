@@ -49,9 +49,19 @@ fi
 print_info "Updating submodules"
 echo -e "${color_dimmed}"
 
+# Update each of the submodules
 git submodule foreach 'git checkout --quiet main && git pull --quiet origin main'
-git add sources/
-git commit --quiet --message "chore(sources): update all submodules"
 
 echo -e "${color_normal}"
-print_success "Successfully updated submodules"
+# Check if anything has changed
+if ! [[ -z "$(git status --porcelain)" ]]
+then
+	# If it has, then commit the changes
+	git add sources/
+	git commit --quiet --message "chore(sources): update all submodules"
+
+	print_success "Successfully updated submodules"
+else
+	# Else let the developer know that nothing was changed
+	print_success "All sources are already up to date"
+fi
