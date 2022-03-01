@@ -66,7 +66,7 @@ implement the bug fix/feature request!
 
 | Release | Start Date  | End Date    | Status      | Delay in Days | REQ                                                                                  | Documentation                                        | Code                                                   | Logs                                                            |
 | ------- | ----------- | ----------- | ----------- | ------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------- |
-| 0.1.1   | 07 Feb 2022 | 18 Feb 2022 | In progress |               | [Task List](https://github.com/beckn/bap-reference-app/issues?q=milestone%3Av0.1.1+) | [Wiki](https://github.com/beckn/beckn-in-a-box/wiki) | [Codebase](https://github.com/beckn/bap-reference-app) | [Logs](https://github.com/beckn/bap-reference-app/commits/main) |
+| 0.1.1   | 07 Feb 2022 | 18 Feb 2022 | Delayed | 10 | [Task List](https://github.com/beckn/bap-reference-app/issues?q=milestone%3Av0.1.1+) | [Wiki](https://github.com/beckn/beckn-in-a-box/wiki) | [Codebase](https://github.com/beckn/bap-reference-app) | [Logs](https://github.com/beckn/bap-reference-app/commits/main) |
 
 > Note that this version number is for the Retail Beckn Application. The Docker
 > images are released using the versioning system mentioned
