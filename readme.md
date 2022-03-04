@@ -3,6 +3,8 @@
 This repository contains the instructions and files required to deploy this
 Beckn Application (BAP) or any of its building blocks individually.
 
+> **Disclaimer:** This project is still in beta phase. Ustable for Production Use
+
 ## Overview
 
 This BAP comprises of four building blocks: the UI layer, the Beckn protocol
