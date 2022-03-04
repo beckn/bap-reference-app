@@ -3,7 +3,7 @@
 This repository contains the instructions and files required to deploy this
 Beckn Application (BAP) or any of its building blocks individually.
 
-> **Disclaimer:** This project is still in beta phase. Ustable for Production Use
+> **Disclaimer:** This project is still in beta phase. Unstable for Production Use
 
 ## Overview
 
