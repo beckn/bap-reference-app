@@ -62,7 +62,7 @@ implement the bug fix/feature request!
 
 | Projects/Products    | Version | Versioning Scheme                                                                                                                 | Manager | Responsible | Accountable | Consulted        | Informed       | Last update                                  | Last updated date | Next upcoming release date |
 | -------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------- | ------- | ----------- | ----------- | ---------------- | -------------- | -------------------------------------------- | ----------------- | -------------------------- |
-| Retail Reference BAP | 0.1.1   | [Version Management](https://docs.google.com/document/d/1HjXV4W2STirMUa2_L8bGWB0ORn9SeYRvJSyUPbntbXY/edit#heading=h.b06d3jp4draa) | Nirmal  | Nirmal      | Nirmal      | Enterprise Minds | General Public | End-to-end functionality testing in progress | 14 Feb 2022       | 28 Feb 2022                |
+| Retail Reference BAP | 0.1.1   | [Version Management](https://docs.google.com/document/d/1HjXV4W2STirMUa2_L8bGWB0ORn9SeYRvJSyUPbntbXY/edit#heading=h.b06d3jp4draa) | Nirmal  | Nirmal      | Nirmal      | Enterprise Minds | General Public | 21 Functionality defects have identified and 18 defects have been fixed | 14 Feb 2022       | 28 Feb 2022                |
 
 ## Releases
 
